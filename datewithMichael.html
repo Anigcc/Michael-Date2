@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Date Proposal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f3df;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #d45a35;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .button, select, input[type="submit"], input[type="text"], input[type="email"] {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: white;
+            background-color: #d45a35;
+            border: none;
+            border-radius: 5px;
+        }
+        .button:hover, input[type="submit"]:hover {
+            background-color: #a9442d;
+        }
+        .options {
+            display: none;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        function showOptions(day) {
+            document.getElementById('day-options').style.display = 'none';
+            document.getElementById(day.toLowerCase() + '-options').style.display = 'block';
+        }
+
+        function showCuisine() {
+            document.getElementById('friday-options').style.display = 'none';
+            document.getElementById('sunday-options').style.display = 'none';
+            document.getElementById('cuisine-options').style.display = 'block';
+        }
+
+        function selectRandomCuisine() {
+            const cuisines = ["Italian", "Korean", "Vietnamese", "Indian", "Colombian", "Mexican"];
+            const randomCuisine = cuisines[Math.floor(Math.random() * cuisines.length)];
+            document.getElementById('selected-cuisine').innerText = `Cuisine selected: ${randomCuisine}`;
+            document.getElementById('selected-cuisine-value').value = randomCuisine;
+            document.getElementById('restaurant-options').style.display = 'block';
+        }
+
+        function sendEmail() {
+            const day = document.querySelector('input[name="day"]:checked').value;
+            const activity = day === 'Friday' ? 
+                document.getElementById('friday-activity').value : 
+                document.getElementById('sunday-activity').value;
+            const cuisine = document.getElementById('selected-cuisine-value').value;
+            const restaurant1 = document.getElementById('restaurant1').value;
+            const restaurant2 = document.getElementById('restaurant2').value;
+
+            const subject = "Date Proposal Details";
+            const body = `Day: ${day}\nActivity: ${activity}\nCuisine: ${cuisine}\nRestaurant options: ${restaurant1}, ${restaurant2}`;
+
+            window.location.href = `mailto:gina.cardona1226@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            document.getElementById('summary').innerText = `I'm so excited to spend a wonderful ${day} with you! We'll enjoy a lovely ${activity}, indulging in delicious ${cuisine} cuisine at either ${restaurant1} or ${restaurant2}.`;
+
+            document.getElementById('thank-you-message').style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <h1>Hello, My Love!</h1>
+    <img src="michael.jpeg" alt="Romantic Image">
+    <p>Today, I want to be the one who has a special detail for you. You are very special to me, and I want to invite you on a date.</p>
+    <div id="day-options">
+        <p>Select a day:</p>
+        <label><input type="radio" name="day" value="Friday" onclick="showOptions(this.value)"> Friday</label>
+        <label><input type="radio" name="day" value="Sunday" onclick="showOptions(this.value)"> Sunday</label>
+    </div>
+
+    <div id="friday-options" class="options">
+        <p>Choose an activity:</p>
+        <select id="friday-activity" onchange="showCuisine()">
+            <option value="">--Select an activity--</option>
+            <option value="dinner">Dinner</option>
+            <option value="cinema and picnic">Cinema and Picnic</option>
+        </select>
+    </div>
+
+    <div id="sunday-options" class="options">
+        <p>Choose an activity:</p>
+        <select id="sunday-activity" onchange="showCuisine()">
+            <option value="">--Select an activity--</option>
+            <option value="lunch at a restaurant of your choice">Lunch at a restaurant of your choice</option>
+            <option value="picnic at the lake">Picnic at the lake</option>
+        </select>
+    </div>
+
+    <div id="cuisine-options" class="options">
+        <p>Choose a cuisine:</p>
+        <button type="button" class="button" onclick="selectRandomCuisine()">Select Random Cuisine</button>
+        <p id="selected-cuisine"></p>
+        <input type="hidden" id="selected-cuisine-value">
+    </div>
+
+    <div id="restaurant-options" class="options">
+        <p>Please enter two restaurant options:</p>
+        <input type="text" id="restaurant1" placeholder="Restaurant 1">
+        <input type="text" id="restaurant2" placeholder="Restaurant 2">
+        <button type="button" class="button" onclick="sendEmail()">Send Details</button>
+    </div>
+
+    <div id="summary" style="margin-top: 30px; font-size: 1.2em; color: #d45a35;"></div>
+
+    <div id="thank-you-message" style="display:none; margin-top: 30px;">
+        <p>Thank you so much for agreeing to go out with me! My heart is very happy about it! See you soon!</p>
+        <img src="option2.jpg" alt="Smiling Heart">
+    </div>
+</body>
+</html>
